@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Editor from './Editor';
 import Button from 'react-bootstrap/Button';
 import ExpandIcon from './ExpandIcon';
+import CollapseIcon from './CollapseIcon';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -22,10 +23,9 @@ class TopBar extends React.Component {
             this.sendData();})
     }
 
-
     sendData = () => {
-        console.log('toggle state is', this.state.isToggleOn);
-        this.props.parentCallbackTopBar(this.state.isToggleOn);
+     //   console.log('toggle state is', this.state.isToggleOn);
+        this.props.parentCallbackTopBar({isToggleOn: this.state.isToggleOn, isTitle: this.props.title});
     }
 
     render() {
@@ -41,12 +41,21 @@ class TopBar extends React.Component {
             marginLeft: 'auto'
         }
 
+        const isToggleOn = this.state.isToggleOn;
+
+        let button;
+        if (!isToggleOn) {
+            button = <ExpandIcon onClick={this.handleClick}/>;
+        } else {
+            button = <CollapseIcon onClick={this.handleClick}/> ;
+        }
+
         return (
             <div style={boxStyle}>
                 <div style={{display: 'grid', gridColumnStart:1}}><img style={{height:'75%', width:'75%', margin: 'auto' }} src="./favicon.ico" /></div>
                 <div style={{display: 'grid', gridColumnStart:2, justifyItems: 'start', alignItems: 'center', paddingLeft:'25px', color:'white', fontWeight:'bold'}}>{this.props.title}</div>
                 <div style={{display: 'grid', gridColumnStart:3, alignItems: 'center'}}>
-                    <ExpandIcon onClick={this.handleClick}/>
+               {button}      
                 </div>
             </div>
     );

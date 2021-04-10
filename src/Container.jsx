@@ -10,9 +10,9 @@ class Container extends React.Component {
             value: "",
             title: "Container",
             message: " ",
-            toggleState: ''
+            toggleState: false,
+            sectionTitle:''
         };
-
     }
 
     callbackFunction = (childData) => {
@@ -20,29 +20,24 @@ class Container extends React.Component {
     }
 
     callbackFunctionTopBar = (childData) => {
-        this.setState({toggleState: childData})
-        console.log(`parent level state is, ${this.state.toggleState}`)
-    }
+        this.setState({toggleState: childData.isToggleOn, sectionTitle: childData.isTitle})
+    }   
 
     render() {
         const gridStyle = {
             display: 'grid',
             gridTemplateColumns: '40px auto 20px',
-            gridTemplateRows: 'auto',
-         
-          //  height: '200px'
+            gridTemplateRows: 'auto',       
         };
         
-        return(
+        return (
             <div style={gridStyle}>
-                <TopBar style={{display: 'grid', gridColumnStart:2, gridRowStart: 1, backgroundColor:'#008060', border:'1px solid black', boxShadow:'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'}} title={"Editor"} parentCallbackTopBar = {this.callbackFunctionTopBar}/>
-                <Editor style={{display: 'grid', gridColumnStart:2, gridRowStart: 2, backgroundColor:'#e1e3e5'}} parentCallback = {this.callbackFunction}/>
-                <TopBar style={{display: 'grid', gridColumnStart:2, gridRowStart: 3, backgroundColor:'#008060', border: '1px solid black', boxShadow:'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px' }} title={"Preview"} parentCallbackTopBar = {this.callbackFunctionTopBar}/>
-                <Preview style={{display: 'grid', gridColumnStart:2, gridRowStart: 4, backgroundColor:'#e1e3e5', zIndex: '-1'}} message={this.state.message}/>
+                <TopBar style={{display: (this.state.toggleState && this.state.sectionTitle == 'Preview') ? 'none' : 'grid', gridColumnStart:2, gridRowStart: 1, backgroundColor:'#008060', border:'1px solid black', boxShadow:'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'}} title={"Editor"} parentCallbackTopBar = {this.callbackFunctionTopBar}/>
+                <Editor  style={{display: (this.state.toggleState && this.state.sectionTitle == 'Preview') ? 'none' : 'grid', gridColumnStart:2, gridRowStart: 2, backgroundColor:'#e1e3e5', height: (this.state.toggleState && this.state.sectionTitle == 'Editor') ? '700px' : '300px'}} parentCallback = {this.callbackFunction}/>
+                <TopBar style={{display: (this.state.toggleState && this.state.sectionTitle == 'Editor') ? 'none' : 'grid', gridColumnStart:2, gridRowStart: 3, backgroundColor:'#008060', border: '1px solid black', boxShadow:'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px' }} title={"Preview"} parentCallbackTopBar = {this.callbackFunctionTopBar}/>
+                <Preview style={{display: (this.state.toggleState && this.state.sectionTitle == 'Editor') ? 'none' : 'grid', gridColumnStart:2, gridRowStart: 4, backgroundColor:'#e1e3e5', height: (this.state.toggleState && this.state.sectionTitle == 'Preview') ? '700px' : '300px'}} message={this.state.message}/>
             </div>
-                )
-                }
-
+            )}
     }
 
     export default Container;

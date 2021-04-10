@@ -16,24 +16,19 @@ class Editor extends React.Component {
   
     this.setState({value: event.target.value}, function() {
         this.sendData();
-    })
-   
-    
+    })    
 }
 
     sendData = () => {
-        console.log('send data', this.state.value);
+      //  console.log('send data', this.state.value);
         this.props.parentCallback(this.state.value);
     }
   
-
    render() {
        
-       return ( 
-     
+       return (     
         <div style={this.props.style}>
-            <textarea id="editor" value={this.state.value} onChange={this.handleChange} style={{height: "300px"}}/>
-
+            <textarea id="editor" value={this.state.value} onChange={this.handleChange}/>
         </div>
        )
    }

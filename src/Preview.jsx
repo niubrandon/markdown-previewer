@@ -19,7 +19,8 @@ class Preview extends React.Component{
 
             const previewStyle = {          
                // backgroundColor: 'lavender',
-                height: '400px'
+               
+                overflow: 'auto'
             };
             return (
                // value={markdown.toHTML(this.props.message)}
